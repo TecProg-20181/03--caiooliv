@@ -1,7 +1,8 @@
 import random
 import string
 
-WORDLIST_FILENAME = "palavras.txt"
+WORDLIST_FILENAME = "words.txt"
+
 
 def loadWords():
     """
@@ -20,13 +21,6 @@ def loadWords():
 
 
 def isWordGuessed(secretWord, lettersGuessed):
-    secretLetters = []
-
-#    for letter in secretWord:
-#        if letter in secretLetters:
-#            secretLetters.append(letter)
-#        else:
-#            pass
 
     for letter in secretWord:
         if letter in lettersGuessed:
@@ -36,20 +30,21 @@ def isWordGuessed(secretWord, lettersGuessed):
 
     return True
 
+
 def getGuessedWord():
 
-     guessed = ''
+    guessed = ''
 
+    return guessed
 
-     return guessed
 
 def getAvailableLetters():
     import string
     # 'abcdefghijklmnopqrstuvwxyz'
     available = string.ascii_lowercase
 
-
     return available
+
 
 def hangman(secretWord):
 
@@ -59,7 +54,7 @@ def hangman(secretWord):
     print 'I am thinking of a word that is', len(secretWord), ' letters long.'
     print '-------------'
 
-    while  isWordGuessed(secretWord, lettersGuessed) == False and guesses >0:
+    while isWordGuessed(secretWord, lettersGuessed) is False and guesses > 0:
         print 'You have ', guesses, 'guesses left.'
 
         available = getAvailableLetters()
@@ -91,7 +86,7 @@ def hangman(secretWord):
 
             print 'Good Guess: ', guessed
         else:
-            guesses -=1
+            guesses -= 1
             lettersGuessed.append(letter)
 
             guessed = getGuessedWord()
@@ -105,12 +100,11 @@ def hangman(secretWord):
         print '------------'
 
     else:
-        if isWordGuessed(secretWord, lettersGuessed) == True:
+        if isWordGuessed(secretWord, lettersGuessed) is True:
             print 'Congratulations, you won!'
         else:
-            print 'Sorry, you ran out of guesses. The word was ', secretWord, '.'
-
-
+            print "Sorry, you ran out of guesses."\
+                  + "The word was ", secretWord, "."
 
 
 secretWord = loadWords().lower()
