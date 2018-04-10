@@ -3,6 +3,11 @@ import string
 
 WORDLIST_FILENAME = "words.txt"
 
+def differentLetters(secretWord):
+
+    differentLetters = set(secretWord)
+    print'Number of different letters in tha word', len(differentLetters)
+
 
 def loadWords():
     """
@@ -50,13 +55,15 @@ def hangman(secretWord):
 
     guesses = 8
     lettersGuessed = []
+
+
     print 'Welcome to the game, Hangam!'
     print 'I am thinking of a word that is', len(secretWord), ' letters long.'
+    differentLetters(secretWord)
     print '-------------'
 
     while isWordGuessed(secretWord, lettersGuessed) is False and guesses > 0:
         print 'You have ', guesses, 'guesses left.'
-
         available = getAvailableLetters()
         for letter in available:
             if letter in lettersGuessed:
