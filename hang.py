@@ -8,6 +8,20 @@ def differentLetters(secretWord):
     differentLetters = set(secretWord)
     print'Number of different letters in tha word', len(differentLetters)
 
+def anotherWord(secretWord):
+
+    if(len(secretWord) > 8):
+        s = raw_input("The word has more than 8 letters, do you want to change the secret word ? [Y/N]\n")
+        if(s == 'y' or s == 'S'):
+            secretWord = loadWords().lower()
+            anotherWord(secretWord)
+            return secretWord
+        else:
+            return secretWord
+    else:
+        return secretWord
+
+
 
 def loadWords():
     """
@@ -44,8 +58,7 @@ def getGuessedWord():
 
 
 def getAvailableLetters():
-    import string
-    # 'abcdefghijklmnopqrstuvwxyz'
+
     available = string.ascii_lowercase
 
     return available
@@ -115,4 +128,4 @@ def hangman(secretWord):
 
 
 secretWord = loadWords().lower()
-hangman(secretWord)
+hangman(anotherWord(secretWord))
