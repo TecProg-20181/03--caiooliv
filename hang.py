@@ -2,11 +2,13 @@ import random
 import string
 import sys
 import os
+import logging
 
 
 WORDLIST = "words.txt"
+LOGLIST = "loglist.log"
 
-
+logging.basicConfig(filename=LOGLIST,level=logging.DEBUG)
 class Word():
 
     def isWordGuessed(self, secretWord, lettersGuessed):
@@ -41,6 +43,7 @@ class Word():
             while (answer != 'y' and answer != 'n'):
                 answer = raw_input("Invalid answer, please use 'y' for yes and 'n' for no\n")
                 answer.lower()
+                logging.info("Validate answer to change word")
 
             if(answer == 'y'):
                 secretWord = loadWords().lower()
@@ -64,6 +67,7 @@ def loadWords():
 
     # line: string
     line = inFile.readline()
+    logging.info("Read file correctly")
     # wordlist: list of strings
     wordlist = string.split(line)
     print len(wordlist), "words loaded."
@@ -71,15 +75,20 @@ def loadWords():
 
 
 def fileChecker():
-    if(os.path.getsize(WORDLIST) == 0):
-        print("File is empty, the program will close")
-        sys.exit(0)
-    # inFile: file
     try:
         inFile = open(WORDLIST, 'r', 0)
+        logging.info("Try open file")
+
     except IOError:
         print("Error in open file, the program will close")
+        logging.info("Failed to open file")
         sys.exit(0)
+
+    if(os.path.getsize(WORDLIST) == 0):
+        print("File is empty, the program will close")
+        logging.info("File empty")
+        sys.exit(0)
+
     return inFile
 
 
