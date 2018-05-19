@@ -1,5 +1,7 @@
 import random
 import string
+import sys
+import os
 
 
 WORDLIST = "words.txt"
@@ -35,6 +37,7 @@ class Word():
 
         if(len(secretWord) > 8):
             answer = raw_input("The word has more than 8 letters, do you want to change the secret word ? [Y/N]\n")
+            answer.lower()
             while (answer != 'y' and answer != 'n'):
                 answer = raw_input("Invalid answer, please use 'y' for yes and 'n' for no\n")
                 answer.lower()
@@ -56,14 +59,28 @@ def loadWords():
     take a while to finish.
     """
     print "Loading word list from file..."
-    # inFile: file
-    inFile = open(WORDLIST, 'r', 0)
+
+    inFile = fileChecker()
+
     # line: string
     line = inFile.readline()
     # wordlist: list of strings
     wordlist = string.split(line)
     print len(wordlist), "words loaded."
     return random.choice(wordlist)
+
+
+def fileChecker():
+    if(os.path.getsize(WORDLIST) == 0):
+        print("File is empty, the program will close")
+        sys.exit(0)
+    # inFile: file
+    try:
+        inFile = open(WORDLIST, 'r', 0)
+    except IOError:
+        print("Error in open file, the program will close")
+        sys.exit(0)
+    return inFile
 
 
 def hangman(secretWord):
