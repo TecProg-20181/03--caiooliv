@@ -19,13 +19,11 @@ class Word():
     def getGuessedWord(self):
 
         self.guessed = ''
-
         return self.guessed
 
     def getAvailableLetters(self):
 
         self.available = string.ascii_lowercase
-
         return self.available
 
     def getDifferentLetters(self, secretWord):
@@ -37,7 +35,11 @@ class Word():
 
         if(len(secretWord) > 8):
             answer = raw_input("The word has more than 8 letters, do you want to change the secret word ? [Y/N]\n")
-            if(answer == 'y' or answer == 'S'):
+            while (answer != 'y' and answer != 'n'):
+                answer = raw_input("Invalid answer, please use 'y' for yes and 'n' for no\n")
+                answer.lower()
+
+            if(answer == 'y'):
                 secretWord = loadWords().lower()
                 self.changeWord(secretWord)
                 return secretWord
@@ -48,6 +50,7 @@ class Word():
 
 
 def loadWords():
+
     """
     Depending on the size of the word list, this function may
     take a while to finish.
@@ -83,6 +86,8 @@ def hangman(secretWord):
 
         print 'Available letters', available
         letter = raw_input('Please guess a letter: ')
+        while not letter.isalpha():
+            letter = raw_input("Invalid character, Please use a letter: ")
         if letter in lettersGuessed:
 
             guessed = word.getGuessedWord()
